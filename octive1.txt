@@ -1,0 +1,57 @@
+num_bit = 10;
+
+bit = rand(1, num_bit);
+
+bit_4out5in = round(bit)  #四捨五入
+
+plot(bit_4out5in)
+
+wave_bit = bit_4out5in'*ones(1, 100) #轉至完，生成每列100個相同數字
+
+wave_bit_wave = reshape(wave_bit', 1, 1000)  #10*100轉至完，改成一列1000個數字
+
+t = 10^-3:10^-3:1;  #開始：間隔：結尾
+
+figure(2);
+plot(t, wave_bit_wave);
+ylim([-0.5 1.5]);
+
+inv_bit = abs(wave_bit_wave-1);
+
+%%%%%%%%%
+%carriers
+f1 = 10; f2 = 5;
+cal = cos(2*pi*f1*t);
+cal2 = cos(2*pi*f2*t);
+
+figure(3);
+subplot(2,1,1);
+plot(t, cal);
+subplot(2,1,2);
+plot(t, cal2);
+
+%%%%%%%%%
+%fsk_wave
+fsk_wave = cal.*wave_bit_wave + cal2.*inv_bit
+figure(4);
+subplot(2,1,1);
+plot(t, wave_bit_wave);
+ylim([-0.5 1.5]);
+subplot(2,1,2);
+plot(t, fsk_wave);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
